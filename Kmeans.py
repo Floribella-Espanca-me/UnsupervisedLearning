@@ -13,8 +13,12 @@ def twopointkmeans(datasetx,datasety,alpha,runs,seed):
     randomindex=math.floor(nextseed*len(datasetx))
     r1=[datasetx[randomindex],datasety[randomindex]]
     nextseed= random.random()
-    randomindex= math.floor(nextseed * len(datasetx))
+    randomindex = math.floor(nextseed * len(datasetx))
     r2=[datasetx[randomindex],datasety[randomindex]]
+    while r1==r2:
+        nextseed = random.random()
+        randomindex = math.floor(nextseed * len(datasetx))
+        r2 = [datasetx[randomindex], datasety[randomindex]]
     firstpass=[r1[:],r2[:]]
     lastpoints=[]
     for run in range(runs):
@@ -68,12 +72,15 @@ def accumulativekmeans(datasetx,datasety,alpha,runs,seed):
         r2[1] = r2[1] + (alpha / len(datasetx)) * d2[1]
         rList.append(r2[:])
         rList.append(r1[:])
-    return [rList, nextseed]
+    print('centroid: '+str(r2) )
+    print('centroid: '+str(r1))
+    return [rList, nextseed,r1,r2]
 
 
 def fusionPoint(datasetx,datasety):
     originalx=datasetx[:]
     originaly=datasety[:]
+    path=[]
 
     while len(datasetx)>2:
 
@@ -82,20 +89,31 @@ def fusionPoint(datasetx,datasety):
         indexb=exe[1]
         newPoint=[(datasetx[indexa]+datasetx[indexb])/2,(datasety[indexa]+datasety[indexb])/2]
 
+        #print('point a: '+str(datasetx[indexa])+'|'+str(datasety[indexa]))
+        #print('point b: '+str(datasetx[indexb]) + '|' + str(datasety[indexb]))
+        #print('new point: '+str(newPoint))
+
         datasetx=numpy.delete(datasetx, [indexa,indexb])
         datasety=numpy.delete(datasety, [indexa,indexb])
 
 
+
         datasetx=numpy.append(datasetx,newPoint[0])
         datasety=numpy.append(datasety, newPoint[1])
+        path.append([newPoint[0],newPoint[1]])
 
     pointa=(datasetx[0],datasety[0])
     pointb = (datasetx[1], datasety[1])
-    print(str(pointa))
-    print(str(pointb))
+    #print(str(pointa))
+    #print(str(pointb))
     pointGeneration.printCommulative([pointa,pointb],originalx,originaly)
 
-
+def DBScan(datasetx,datasety,epsilon,mininumpoints):
+    unvisitedindex=range(len(datasetx))
+    clusterList=[]
+    outliers=[]
+    while len(unvisitedindex)>0:
+        print(help)
 
 
 def pointDistance(x1,y1,x2,y2):

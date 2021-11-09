@@ -33,13 +33,13 @@ def gaussianLabeled(seed):
     nextseed=np.random.random()
     mean = [3, 3]
     cov = [[1, 0], [0, 1]]
-    a = np.random.multivariate_normal(mean, cov, 50)
+    a = np.random.multivariate_normal(mean, cov, 250)
     agaussian=[]
     for point in a:
         agaussian.append( [point[0],point[1],1])
     mean = [-3, -3]
     cov = [[2, 0], [0, 5]]
-    b = np.random.multivariate_normal(mean, cov, 50)
+    b = np.random.multivariate_normal(mean, cov, 250)
     bgaussian = []
     for point in b:
         bgaussian.append([point[0], point[1], 2])
@@ -81,15 +81,23 @@ def printPlot(x,y):
 def printR(fpointList,lpointList,datasetx,datasety):
     plt.plot(datasetx, datasety, 'x')
     for x in fpointList:
-        plt.plot(x[0],x[1],'ro')
+        plt.plot(x[0],x[1],marker='o',color='red')
     for y in lpointList:
-        plt.plot(y[0], y[1], 'bo')
+        plt.plot(y[0], y[1], marker='o',color='orangered')
     plt.show()
 
 def printCommulative(pointList,datasetx,datasety):
     plt.plot(datasetx, datasety, 'x')
     for x in pointList:
         plt.plot(x[0],x[1],'ro')
+    plt.show()
+
+def printCommulativeWPath(pointList,path,datasetx,datasety):
+    plt.plot(datasetx, datasety, 'x')
+    for x in pointList:
+        plt.plot(x[0],x[1],'ro')
+    for y in path:
+        plt.plot(y[0],y[1],'rx')
     plt.show()
 
 
@@ -105,3 +113,23 @@ def closestTwoPoints(datasetx,datasety):
             indexa=pair[0]
             indexb=pair[1]
     return [indexa,indexb]
+
+
+def printCommulativeWColorCheme(r1,r2,datasetx,datasety,label):
+    for index in range(len(datasetx)):
+        distancer1=Kmeans.pointDistance(r1[0],r1[1],datasetx[index],datasety[index])
+        distancer2=Kmeans.pointDistance(r2[0],r2[1],datasetx[index],datasety[index])
+        if label[index]==1:
+            if distancer1<=distancer2:
+                plt.plot(datasetx[index],datasety[index],marker='x',color='skyblue')
+            else:
+                plt.plot(datasetx[index], datasety[index], marker='x', color='plum')
+        else:
+            if distancer2<=distancer1:
+                plt.plot(datasetx[index], datasety[index], marker='x', color='palegreen')
+            else:
+                plt.plot(datasetx[index], datasety[index], marker='x', color='lightblue')
+
+    plt.plot(r1[0],r1[1],'ro')
+    plt.plot(r2[0], r2[1], 'ro')
+    plt.show()

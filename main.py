@@ -15,10 +15,10 @@ def main():
     #exe2=Kmeans.twopointkmeans(exe[0],exe[1],10E-5,11)
     #pointGeneration.printPlotKmeans(exe[0],exe[1],exe[2],exe2[0],exe2[1])
 
-    #tester.kmeansTester(10,10E-5,11)
-    #tester.commulativeTester(10,10E-5,10)
+    #tester.kmeansTester(10,10E-4,11)
+    #tester.commulativeTester(10,0.5,12)
 
-    tester.fusionTeste(10)
+    tester.fusionTeste(13)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

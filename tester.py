@@ -15,7 +15,7 @@ def commulativeTester(numberOfRuns,alpha,seed):
     exe = pointGeneration.gaussianLabeled(nextseed)
     nextseed = exe[3]
     exe2 = Kmeans.accumulativekmeans(exe[0],exe[1],alpha,numberOfRuns,nextseed)
-    pointGeneration.printCommulative(exe2[0],exe[0],exe[1])
+    pointGeneration.printCommulativeWColorCheme(exe2[2],exe2[3],exe[0],exe[1],exe[2])
 
 def fusionTeste(seed):
     nextseed = seed
