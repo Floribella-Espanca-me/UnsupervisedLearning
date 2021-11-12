@@ -39,6 +39,8 @@ def twopointkmeans(datasetx,datasety,alpha,runs,seed):
                     firstpass.append(r2[:])
         lastpoints.append(r2[:])
         lastpoints.append(r1[:])
+    print('centroid: '+str(r2) )
+    print('centroid: '+str(r1))
     return [firstpass,lastpoints,nextseed]
 
 def accumulativekmeans(datasetx,datasety,alpha,runs,seed):
@@ -104,16 +106,34 @@ def fusionPoint(datasetx,datasety):
 
     pointa=(datasetx[0],datasety[0])
     pointb = (datasetx[1], datasety[1])
-    #print(str(pointa))
-    #print(str(pointb))
+    print('centroid: ' + str(pointa))
+    print('centroid: ' + str(pointb))
     pointGeneration.printCommulative([pointa,pointb],originalx,originaly)
 
 def DBScan(datasetx,datasety,epsilon,mininumpoints):
-    unvisitedindex=range(len(datasetx))
+    unvisitedindex=list(range(len(datasetx)))
     clusterList=[]
-    outliers=[]
+
     while len(unvisitedindex)>0:
-        print(help)
+        startingPointindex=unvisitedindex[0]
+        startingPoint=[datasetx[startingPointindex],datasety[startingPointindex]]
+        unvisitedindex.remove(startingPointindex)
+        corePoints=pointGeneration.pointsInEpsilon(datasetx,datasety,epsilon,startingPoint)
+        if(len(corePoints))>=mininumpoints:
+            newCluster = pointGeneration.pointsInCluster(datasetx, datasety, epsilon,corePoints)
+            for i in newCluster:
+                if i in unvisitedindex: unvisitedindex.remove(i)
+        clusterList.append(newCluster)
+
+    #print(str(clusterList))
+    clustered=[]
+    for cluster in clusterList:
+        clustered=clustered+cluster
+    outliers = list(set(range(len(datasetx))) - set(clustered))
+    #print(str(outliers))
+    return [clusterList,outliers]
+
+
 
 
 def pointDistance(x1,y1,x2,y2):

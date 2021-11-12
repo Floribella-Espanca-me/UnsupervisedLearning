@@ -10,15 +10,20 @@ import tester
 
 
 def main():
-    # Use a breakpoint in the code line below to debug your script.
-    #exe=pointGeneration.gaussianLabeled(10)
-    #exe2=Kmeans.twopointkmeans(exe[0],exe[1],10E-5,11)
-    #pointGeneration.printPlotKmeans(exe[0],exe[1],exe[2],exe2[0],exe2[1])
 
-    #tester.kmeansTester(10,10E-4,11)
-    #tester.commulativeTester(10,0.5,12)
+    #exercicio 1
+    tester.kmeansTester(10,10E-4,13)
 
-    tester.fusionTeste(13)
+    #exercicio 2
+    #tester.commulativeTester(30,1,11)
+
+    #exericicio 3
+    #tester.fusionTester(10)
+
+    #exercicio 4
+    #tester.DBScanTester(0.75,7,10)
+
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
